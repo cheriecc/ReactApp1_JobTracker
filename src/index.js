@@ -1,17 +1,68 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux';
+import store from './store/configurationStore';
+import AppRouter from './routers/AppRouter';
+import moment from 'moment';
+import { getAllJobs } from './actions/jobs';
+
+const jobA = {
+  id: "1",
+  title: "Example A",  // string
+  deadline: new moment().valueOf(),  // timestamp
+  applied: false, // boolean
+  type: "Full time",  // string
+  location: "Remote",  // string
+  companyName: "Example A company",  // string
+  link: "Example A link",  // string
+  description: "Example A description",  // string
+  skills: ['SQL'],  //  array
+  status: 'success'
+}
+
+const jobB = {
+  id: "2",
+  title: "Example B",  // string
+  deadline: new moment().valueOf(),  // timestamp
+  applied: false, // boolean
+  type: "Full time",  // string
+  location: "Remote",  // string
+  companyName: "Example B company",  // string
+  link: "Example B link",  // string
+  description: "Example B description",  // string
+  skills: ['Python'],  //  array
+  status: 'failed'
+}
+
+const jobC = {
+  id: "3",
+  title: "Example C",  // string
+  deadline: new moment().valueOf(),  // timestamp
+  applied: false, // boolean
+  type: "Full time",  // string
+  location: "Remote",  // string
+  companyName: "Example B company",  // string
+  link: "Example B link",  // string
+  description: "Example B description",  // string
+  skills: ['Python'],  //  array
+  status: 'failed'
+}
+
+// store.dispatch(addJob(jobA));
+// store.dispatch(addJob(jobB));
+
+
+getAllJobs()
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+const jsx = (
+  <Provider store={store}>
+    <AppRouter />
+</ Provider>
+)
+
+root.render(jsx)
+
+// fetchJobs().then(root.render(jsx))
