@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import JobForm from "./JobForm";
-import { addNewJob } from "../actions/jobs";
+import { addNewJob } from "../slices/jobSlice";
 
 const AddJobPage = () => {
 

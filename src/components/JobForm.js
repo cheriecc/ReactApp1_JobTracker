@@ -3,6 +3,7 @@ import { SingleDatePicker } from "react-dates";
 import moment from "moment";
 import 'react-dates/lib/css/_datepicker.css';
 
+
 const JobForm = (props) => {
 
     const originalState = {

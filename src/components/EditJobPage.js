@@ -1,14 +1,14 @@
 import React from "react";
-import JobForm from "./JobForm";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { updateJob } from "../actions/jobs";
+import JobForm from "./JobForm";
+import { updateJob } from "../slices/jobSlice";
 
 
 const EditJobPage = () => {
 
     const { id } = useParams();
-    const job = useSelector((state) => state.jobs.find(j => j.id === id));
+    const job = useSelector(state => state.jobs.find(j => j.id === id));
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -21,7 +21,6 @@ const EditJobPage = () => {
                     dispatch(updateJob(id, jobUpdate))
                     navigate('/jobboard')
                 }}
-            
             />
         </div>
     )
