@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import JobForm from "./JobForm";
-import { updateJob } from "../slices/jobSlice";
+import { updateJob, updateJobSkills } from "../slices/jobSlice";
 
 
 const EditJobPage = () => {

@@ -1,13 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { collection, doc, getDocs, addDoc, updateDoc, deleteDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, addDoc, updateDoc, deleteDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 
 
-const initialState = [];
-
 const jobSlice = createSlice({
     name: 'jobs',
-    initialState,
+    initialState: [],
     reducers: {
         setJobs: (state, action) => state.concat(action.payload),
         addJob: (state, action) => [...state, action.payload],
@@ -27,11 +25,8 @@ const jobSlice = createSlice({
 export const getAllJobs = () => async (dispatch) => {
     const jobsData = await getDocs(collection(db, 'jobs'))
     const jobs = []
-    jobsData.forEach(doc => {
-        jobs.push({id: doc.id, ...doc.data()})
-    });
+    jobsData.forEach(doc => jobs.push({id: doc.id, ...doc.data()}));
     dispatch(setJobs(jobs))
-    return Promise.resolve()
 }
 
 export const addNewJob =  (newJob) => async (dispatch) => {
@@ -41,9 +36,19 @@ export const addNewJob =  (newJob) => async (dispatch) => {
 
 export const updateJob = (id, jobUpdate) => async (dispatch) => {
     await updateDoc(doc(db, 'jobs', id), jobUpdate)
-    console.log(id, 'job has been updated')
-    console.log('update info', jobUpdate)
     dispatch(editJob({id, jobUpdate}))
+}
+
+export const addJobProgress = (id, update) => async (dispatch) => {
+    const selectedJob = await getDoc(doc(db, 'jobs', id))
+    await updateDoc(doc(db, 'jobs', id), {updates: arrayUnion(update)})
+    dispatch(editJob({id, updates: selectedJob.data().updates.concat(update)}));
+}
+
+export const removeJobProgress = (id, update) => async (dispatch) => {
+    const selectedJob = await getDoc(doc(db, 'jobs', id))
+    await updateDoc(doc(db, 'jobs', id), {updates: arrayRemove(update)})
+    dispatch(editJob({id, updates: selectedJob.data().updates.splice(selectedJob.data().updates.indexOf(update),1)}));
 }
 
 export const removeJob = (id) => async (dispatch) => {

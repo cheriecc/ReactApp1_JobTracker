@@ -4,6 +4,7 @@ import './index.css';
 import { Provider } from 'react-redux';
 import store from './store/configurationStore';
 import AppRouter from './routers/AppRouter';
+import FacingPage from './components/FacingPage';
 import { getAllJobs } from './slices/jobSlice';
 
 
@@ -61,6 +62,7 @@ const jsx = (
 </ Provider>
 )
 
-root.render(<p>Loading</p>)
+root.render(<FacingPage />)
 
-store.dispatch(getAllJobs()).then(() => root.render(jsx))
+store.dispatch(getAllJobs())
+setTimeout(() => root.render(jsx), 1000)

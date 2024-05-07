@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { removeJob } from "../slices/jobSlice";
+import { removeJob, updateJob } from "../slices/jobSlice";
 import moment from "moment";
+import { Switch, Button } from '@mui/material';
 
 
+// Pending to update
 const JobDetailsPage = () => {
 
     const { id } = useParams()
@@ -12,23 +14,33 @@ const JobDetailsPage = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+    const [checked, setChecked] = useState(job.tracking)
+
+    const onTrackingChange = (e) => {
+        setChecked(e.target.checked)
+        dispatch(updateJob(id, {...job, tracking: e.target.checked}))
+    }
+
     return (
     <div>
-        <h1>Track my job application</h1>
-        <p>{job.companyName} - {job.title}</p>
-        <p>deadline: {moment(job.deadline).format('MMM Do, YYYY')}</p>
-        <a href={job.link}>Link</a>
-        <p>type: {job.type}</p>
-        <p>location: {job.location}</p>
-        <p>applied: {job.applied ? '√' : '×'}</p>
-        <p>description: {job.description}</p>
-        {job.skills.map(skill => <button key={skill}>{skill}</button>)}
+        <h1>{job.companyName} - {job.title}</h1>
+        <Switch checked={checked} onChange={onTrackingChange} inputProps={{ 'aria-label': 'controlled' }} />
+        <p>Deadline: {moment(job.deadline).format('MMM Do, YYYY')}</p>
+        <p>Link: <a href={job.link}>{job.companyName} - {job.title}</a></p>
+        <p>Type: {job.type}</p>
+        <p>Location: {job.location}</p>
+        <p>Applied: {job.applied ? '√' : '×'}</p>
+        {job.applied && <p>submitted CV: <a href={job.link}>CV</a></p>}
+        <p>Description: {job.description}</p>
+        <p>Skills:</p>
+        {job.skills.map(skill => <Button key={skill} variant='contained'>{skill}</Button>)}
         <p>Status: {job.status}</p>
-        <Link to={`/edit/${id}`}>Update status</Link>
-        <button onClick={() => {
+        <Button variant='outlined'><Link to={`/edit/${id}`}>Update status</Link></Button>
+        
+        <Button variant='outlined' onClick={() => {
             dispatch(removeJob(id))
             navigate('/jobboard')
-            }}>Delete job</button>
+            }}>Delete job</Button>
     </div>
     )
 }
