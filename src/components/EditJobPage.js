@@ -1,8 +1,9 @@
 import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { Container, Grid, Typography } from '@mui/material';
 import JobForm from "./JobForm";
-import { updateJob, updateJobSkills } from "../slices/jobSlice";
+import { updateJob } from "../slices/jobSlice";
 
 
 const EditJobPage = () => {
@@ -13,8 +14,9 @@ const EditJobPage = () => {
     const navigate = useNavigate()
 
     return (
-        <div>
-            <h1>Edit Expense</h1>
+        <Container maxWidth="lg">
+            <Grid container direction="column" alignItems="center">
+            <Typography variant="h4">Edit Job Details</Typography>
             <JobForm 
                 key={id} job={job}
                 onSubmit={(jobUpdate) => {
@@ -22,7 +24,8 @@ const EditJobPage = () => {
                     navigate('/jobboard')
                 }}
             />
-        </div>
+            </Grid>
+        </Container>
     )
 }
 

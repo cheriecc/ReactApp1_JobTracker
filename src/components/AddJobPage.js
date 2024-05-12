@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Container, Grid, Typography } from '@mui/material';
 import JobForm from "./JobForm";
 import { addNewJob } from "../slices/jobSlice";
 import moment from 'moment';
@@ -12,14 +13,20 @@ const AddJobPage = () => {
     const navigate = useNavigate()
 
     return (
-        <div>
-            <h1>Track a new job</h1>
-            <JobForm onSubmit={(newJob) => {
-                dispatch(addNewJob({...newJob, createAt: moment().valueOf()}))
-                navigate('/jobboard')
-            }}
-            />
-        </div>
+        <Container maxWidth="lg">
+            <Grid container direction="column" alignItems="center" rowSpacing={2}>
+                <Grid item mt={3}>
+                    <Typography variant="h4">Track a New Job</Typography>
+                </Grid>
+                <Grid item>
+                    <JobForm onSubmit={(newJob) => {
+                        dispatch(addNewJob({...newJob, createAt: moment().valueOf()}))
+                        navigate('/jobboard')
+                    }}
+                />
+                </Grid>
+            </Grid>
+        </Container>
     )
 }
 

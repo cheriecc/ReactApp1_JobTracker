@@ -7,7 +7,7 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import moment from 'moment';
 
 
-const JobProgressUpdateModal = (props) => {
+const JobProgressCard = (props) => {
 
     const [dialogState, setDialogState] = useState({
       date: props.update.date,
@@ -31,20 +31,20 @@ const JobProgressUpdateModal = (props) => {
   
     return (
       <Fragment>
-        <Dialog open={props.open} onClose={() => props.onClose()} PaperProps={{ component: 'form', onSubmit: handleSubmit}}fullWidth>
-          <Grid container justifyContent="space-between">
+        <Dialog open={props.open} onClose={() => props.onClose()} PaperProps={{ component: 'form', onSubmit: handleSubmit}} fullWidth>
+          <Grid container direction="row" justifyContent="space-between">
             <Grid item><DialogTitle>Record Progress</DialogTitle></Grid>
             <Grid item><IconButton onClick={() => props.onClose()}><CloseRoundedIcon/></IconButton></Grid>
           </Grid>
           <DialogContent>
             {dialogState.error && (<DialogContentText>{dialogState.error}</DialogContentText>)}
-          <Grid container margin={2}>
-            <Grid item>
+          <Grid container display="flex" justifyContent="space-between" my={2}>
+            <Grid item >
               <LocalizationProvider dateAdapter={AdapterMoment}>
                 <DatePicker size='small' label='date' value={moment(dialogState.date)} onChange={(date) => setDialogState(oldState => ({...oldState, date}))}/>
               </LocalizationProvider>
             </Grid>
-            <Grid item><TextField value={dialogState.note} margin="dense" name="note" label="note" variant="standard" onChange={(e) => setDialogState(oldState => ({...oldState, note: e.target.value}))} /></Grid>
+            <Grid item><TextField value={dialogState.note} name="note" label="note" variant="standard" onChange={(e) => setDialogState(oldState => ({...oldState, note: e.target.value}))} /></Grid>
           </Grid>  
           </DialogContent>
           <DialogActions>
@@ -57,4 +57,4 @@ const JobProgressUpdateModal = (props) => {
   }
 
 
-export default JobProgressUpdateModal;
+export default JobProgressCard;

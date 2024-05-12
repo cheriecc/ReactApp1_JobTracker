@@ -16,19 +16,19 @@ const JobFilter = () => {
                 display: 'flex',
                 gridTemplateColumns: { sm: '1fr 1fr' },
                 gap: 2,
+                marginY: 3,
+                paddingX: 2
             }}
           >
                 <Grid container justifyContent="space-between">
 
-                <TextField label="Search" margin="dense" onChange={(e) => dispatch(setTextFilter(e.target.value))}/>
-                <FormControl sx={{ m: 1, minWidth: 120 }} size="normal">
+                <TextField label="Search" margin="dense" variant="standard" size="small" onChange={(e) => dispatch(setTextFilter(e.target.value))}/>
+                <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
                     <InputLabel>Sort by</InputLabel>
                     <Select
                         value={filters.sortBy}
                         label="sortBy"
-                        onChange={(e) => {
-                            dispatch(sortByInput(e.target.value))
-                        }}
+                        onChange={(e) => dispatch(sortByInput(e.target.value))}
                     >
                         <MenuItem value="deadline">Deadline</MenuItem>
                         <MenuItem value='create At'>Create At</MenuItem>
@@ -52,6 +52,7 @@ const JobFilter = () => {
                         />}
                     label="Tracked Jobs Only"
                 />
+
             </Grid>
         </Box>
     )

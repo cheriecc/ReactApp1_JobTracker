@@ -4,65 +4,33 @@ import './index.css';
 import { Provider } from 'react-redux';
 import store from './store/configurationStore';
 import AppRouter from './routers/AppRouter';
-import FacingPage from './components/FacingPage';
+import LoadingPage from './components/LoadingPage';
 import { getAllJobs } from './slices/jobSlice';
+import theme from './theme/theme';
+import { ThemeProvider } from '@mui/material';
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from './firebase/firebase';
+import { logOut } from './firebase/auth';
 
-
-// const jobA = {
-//   id: "1",
-//   title: "Example A",  // string
-//   deadline: new moment().valueOf(),  // timestamp
-//   applied: false, // boolean
-//   type: "Full time",  // string
-//   location: "Remote",  // string
-//   companyName: "Example A company",  // string
-//   link: "Example A link",  // string
-//   description: "Example A description",  // string
-//   skills: ['SQL'],  //  array
-//   status: 'success'
-// }
-
-// const jobB = {
-//   id: "2",
-//   title: "Example B",  // string
-//   deadline: new moment().valueOf(),  // timestamp
-//   applied: false, // boolean
-//   type: "Full time",  // string
-//   location: "Remote",  // string
-//   companyName: "Example B company",  // string
-//   link: "Example B link",  // string
-//   description: "Example B description",  // string
-//   skills: ['Python'],  //  array
-//   status: 'failed'
-// }
-
-// const jobC = {
-//   id: "3",
-//   title: "Example C",  // string
-//   deadline: new moment().valueOf(),  // timestamp
-//   applied: false, // boolean
-//   type: "Full time",  // string
-//   location: "Remote",  // string
-//   companyName: "Example B company",  // string
-//   link: "Example B link",  // string
-//   description: "Example B description",  // string
-//   skills: ['Python'],  //  array
-//   status: 'failed'
-// }
-
-// store.dispatch(addJob(jobA));
-// store.dispatch(addJob(jobB));
-// store.dispatch(addJob(jobC));
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 const jsx = (
-  <Provider store={store}>
-    <AppRouter />
-</ Provider>
+  <ThemeProvider theme={theme}>
+    <Provider store={store}>
+      <AppRouter />
+  </ Provider>
+  </ThemeProvider>
 )
 
-root.render(<FacingPage />)
+root.render(<LoadingPage />)
 
-store.dispatch(getAllJobs())
-setTimeout(() => root.render(jsx), 1000)
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    store.dispatch(getAllJobs()).then(() => root.render(jsx))
+  } else {
+    logOut(() => root.render(jsx))
+  }
+})
+
+// setTimeout(() => root.render(jsx), 500)

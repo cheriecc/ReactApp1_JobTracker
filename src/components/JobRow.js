@@ -8,7 +8,8 @@ import EditNoteRoundedIcon from '@mui/icons-material/EditNoteRounded';
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 import PlaylistAddRoundedIcon from '@mui/icons-material/PlaylistAddRounded';
 import { addJobProgress, removeJobProgress } from '../slices/jobSlice';
-import JobProgressUpdateModal from './JobProgressUpdateModal';
+import JobProgressCard from './JobProgressCard';
+import JobCard from "./JobCard";
 import moment from 'moment';
 
 
@@ -16,11 +17,13 @@ const JobRow = (props) => {
 
   const initstate = {
     open: false,
+    jobCardOpen: false,
     dialogOpen: false,
     progress: {
       date: moment().valueOf(),
       note: ''
-    }
+    },
+    operation: 'add'
   }
   const [allState, setAllState] = useState(initstate)
   const dispatch = useDispatch()
@@ -29,6 +32,7 @@ const JobRow = (props) => {
   return (
     <Fragment>
       <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+        {allState.jobCardOpen && <JobCard id={props.jobDetails.id} open={allState.jobCardOpen} onClose={()=> setAllState((oldState => ({...oldState, jobCardOpen: false})))}/>}
         <TableCell>
           <IconButton
             aria-label="expand row"
@@ -53,27 +57,32 @@ const JobRow = (props) => {
                   <Typography variant="h6" gutterBottom component="div">Progress</Typography>
                 </Grid>
                 <Grid item>
-                  <Button variant='contained' color="primary" onClick={()=> navigate(`/jobs/${props.jobDetails.id}`)}>Check details</Button>
+                  <Button variant='contained' onClick={()=> setAllState((oldState => ({...oldState, jobCardOpen: true})))}>Check details</Button>
+                  {/* <Button variant='contained' onClick={()=> navigate(`/jobs/${props.jobDetails.id}`)}>Check details</Button> */}
                 </Grid>
               </Grid>
-              <Table size="small" aria-label="purchases">
+              <Table size="small">
                 <TableHead>
                   <TableRow>
                     <TableCell />
                     <TableCell>Date</TableCell>
                     <TableCell>Note</TableCell>
                     <TableCell align='center'>
-                      <IconButton color='secondary' onClick={() => setAllState(oldState => ({...oldState, dialogOpen: true}))}><PlaylistAddRoundedIcon /></IconButton>
+                      <IconButton color='primary' onClick={() => setAllState(oldState => ({...oldState, dialogOpen: true, operation: 'add'}))}><PlaylistAddRoundedIcon /></IconButton>
                       </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {allState.dialogOpen && (<JobProgressUpdateModal 
+                  {allState.dialogOpen && (<JobProgressCard 
                     open={allState.dialogOpen}
                     onClose={() => setAllState(oldState => ({...oldState, dialogOpen: false, progress: {date: moment().valueOf(), note: ''}}))}
                     update={allState.progress}
-                    onSubmit={(progressUpdate) => {
-                      dispatch(addJobProgress(props.jobDetails.id, progressUpdate))
+                    onSubmit={async (progressUpdate) => {
+                      console.log(allState.operation)
+                      if (allState.operation === 'edit') {
+                        await dispatch(removeJobProgress(props.jobDetails.id, progressUpdate.date))
+                      } 
+                      await dispatch(addJobProgress(props.jobDetails.id, progressUpdate))
                       navigate(0)
                     }}
                   />)}
@@ -84,21 +93,21 @@ const JobRow = (props) => {
                       <TableCell>{u.note}</TableCell>
                       <TableCell align='center'>
                         <IconButton 
-                          color='primary' 
-                          onClick={() => setAllState(oldState => ({...oldState, dialogOpen: true, progress: {date: u.date, note: u.note}}))}
+                          color="primary" 
+                          onClick={() => {
+                            setAllState(oldState => ({...oldState, dialogOpen: true, progress: {date: u.date, note: u.note}, operation: 'edit'}))}
+                          }
                         ><EditNoteRoundedIcon /></IconButton>
                         <IconButton
-                          color='primary'
+                          color="primary"
                           onClick={async () => {
-                            console.log('clicked')
-                            await dispatch(removeJobProgress(props.jobDetails.id, {date: u.date, note: u.note}))
-                            await navigate(0)
+                            await dispatch(removeJobProgress(props.jobDetails.id, u.date))
+                            navigate(0)
                           }}
                           ><DeleteForeverRoundedIcon /></IconButton>
                         </TableCell>
                     </TableRow>
                   ))}
-
                 </TableBody>
               </Table>
             </Box>

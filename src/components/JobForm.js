@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import moment from 'moment';
-import { TextField, Autocomplete, Button } from '@mui/material';
+import { Box, Grid, TextField, Button, Typography, FormControl, Select, InputLabel, MenuItem } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
@@ -8,17 +9,19 @@ import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 
 const JobForm = (props) => {
 
+    const navigate = useNavigate()
+
     const originalState = {
         title: props.job ? props.job.title : '',
         deadline: props.job ? props.job.deadline : moment().valueOf(),
         applied: props.job ? props.job.applied : false,
-        type: props.job ? props.job.type : 'Full time',        
+        type: props.job ? props.job.type : '',        
         location: props.job ? props.job.location : '',
         companyName: props.job ? props.job.companyName : '',
         link: props.job ? props.job.link : '',
         description: props.job ? props.job.description : '',
         skills: props.job ? props.job.skills : [],
-        status: props.job ? props.job.status : 'In process',
+        status: props.job ? props.job.status : 'In Progress',
         error: ''
     }
 
@@ -29,8 +32,8 @@ const JobForm = (props) => {
         setJobState(oldState => ({...oldState, [e.target.name]: e.target.value}))
     }
 
-    const handleSelectChange = (event, value) => {
-        setJobState(oldState => ({...oldState, [value.id]: value.label}))
+    const handleSelectChange = (e) => {
+        setJobState(oldState => ({...oldState, [e.target.name]: e.target.value}))
     }
 
     const handleDateChange = (deadline) => {
@@ -47,10 +50,10 @@ const JobForm = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log(jobState)
         if (!jobState.title || !jobState.deadline || !jobState.companyName) {
             setJobState(oldState => ({...oldState, error: 'Please provide job details.'}))
         } else {
-            console.log(jobState)
             props.onSubmit({
                 title: jobState.title,
                 deadline: jobState.deadline.valueOf(),
@@ -67,69 +70,101 @@ const JobForm = (props) => {
     }
 
     const types = ['Full time', 'Part time', 'Contract']
-    const statuss = ['Success', 'In process', 'Failed']
-    const skills = ['SQL', 'MongoDB', 'Firebase', 'Java', 'C#', 'Python', 'JavaScript', 'PHP', 'React']
+    const statuss = ['Success', 'In Progress', 'Failed']
+    const skills = ['C++', 'Java', 'C#', 'Python', 'JavaScript', 'PHP', 'React', 'Django', 'Vue', 'SQL', 'MongoDB', 'Firebase']
 
     return (
-        <div>
-            {jobState.error !== '' && <p>{jobState.error}</p>}
-            <form onSubmit={handleSubmit}>
-            
-            <p>Job title: </p><input value={jobState.title} name='title' placeholder='Job title' onChange={handleChange}/>
-            
-            <p>Company name:</p><input value={jobState.companyName} name='companyName' placeholder='Company name' onChange={handleChange}/>
+        <Box component="form">
+            {jobState.error !== '' && <Typography variant='caption'>{jobState.error}</Typography>}
 
-            <p>Job Deadline: </p> 
+            <Grid container display="flex" justifyContent="center" spacing={2} columnSpacing={2}>
 
-            <LocalizationProvider dateAdapter={AdapterMoment}>
-            <DatePicker value={moment(jobState.deadline)} onChange={handleDateChange}/>
-            </LocalizationProvider>
+                <Grid item md={10} container display="flex" justifyContent="space-evenly" spacing={2}>
+                    <Grid item xs={6} md={4}>
+                    <TextField required sx={{ minWidth: 250 }} label="Company name" name="companyName" value={jobState.companyName} onChange={handleChange}/>
+                    </Grid>
+                    <Grid item xs={6} md={4}>
+                    <TextField required sx={{ minWidth: 250 }} label="Job title" name="title" value={jobState.title} onChange={handleChange}/>
+                    </Grid>
+                </Grid>
 
-            <p>Applied: </p> 
-            <select name='applied' onChange={handleChange}>
-                <option>true</option>
-                <option>false</option>
-            </select>
+                <Grid item md={10} container display="flex" justifyContent="space-evenly" spacing={2}>
+                    <Grid item xs={6} md={4}>
+                        <LocalizationProvider dateAdapter={AdapterMoment}>
+                        <DatePicker sx={{ minWidth: 250 }} label="Job deadline" value={moment(jobState.deadline)} onChange={handleDateChange}/>
+                        </LocalizationProvider>                    
+                    </Grid>
+                    <Grid item xs={6} md={4}>
+                        <FormControl sx={{ minWidth: 250 }}>
+                            <InputLabel>Type</InputLabel>
+                            <Select value={jobState.type} label="Type" name="type" onChange={handleSelectChange}>
+                                {types.map((t => <MenuItem key={t} value={t}>{t}</MenuItem>))}
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                </Grid>
 
-            <p>Type: </p>
-            <Autocomplete
-                onChange={handleSelectChange}
-                disablePortal
-                options={types.map(option => ({label: option, id: 'type'}))}
-                sx={{ width: 300 }}
-                isOptionEqualToValue={(option, value) => option.label === value.label}
-                renderInput={(params) => <TextField {...params} label='Type' placeholder={jobState.type} />}
-            />
-            
-            <p>Location:</p><input value={jobState.location} name='location' placeholder='Location' onChange={handleChange}/>
+                <Grid item md={10} container display="flex" justifyContent="space-evenly" spacing={2}>
+                    <Grid item xs={6} md={4}>
+                        <TextField sx={{ minWidth: 250 }} label="Location" name='location' value={jobState.location} onChange={handleChange}/>
+                    </Grid>
 
-            <p>Link:</p><input value={jobState.link} name='link' placeholder='Link' onChange={handleChange}/>
+                    <Grid item xs={6} md={4}>
+                        <TextField sx={{ minWidth: 250 }} label="Link" name='link' value={jobState.link} onChange={handleChange}/>
+                    </Grid>
 
-            <p>description:</p><textarea valuer={jobState.description} name='description' placeholder='Description' onChange={handleChange}/>
+                </Grid>
 
-            <p>Skills:</p>
-            {skills.map((skill, index) => (
-                <Button 
-                    key={index}
-                    onClick={() => handleSkillChange(skill)}
-                    variant={jobState.skills.includes(skill) ? 'contained': 'outlined'}
-                >{skill}</Button>
-            ))}
+                <Grid item md={8} container direction="column" px={2}>
+                    <Typography variant="body1">Skill set:</Typography>
+                    <Box display="flex" flexWrap="wrap" spacing={1}>
+                        {skills.map((skill, index) => (
+                            <Button
+                                mr={1}
+                                key={index}
+                                onClick={() => handleSkillChange(skill)}
+                                variant={jobState.skills.includes(skill) ? 'selected': 'unselect'}
+                            >{skill}</Button>
+                        ))}
+                    </Box>
+                </Grid>
 
-            <p>Status: </p>
-            <Autocomplete
-                onChange={handleSelectChange}
-                disablePortal
-                options={statuss.map(option => ({label: option, id: 'status'}))}
-                sx={{ width: 300 }}
-                isOptionEqualToValue={(option, value) => option.label === value.label}
-                renderInput={(params) => <TextField {...params} label='Status' placeholder={jobState.status} />}
-            />
+                <Grid item xs={12} md={8}>
+                    <TextField fullWidth multiline label="Description" name='description' value={jobState.description} onChange={handleChange}/>
+                </Grid>
 
-            <button>Save</button>
-        </form>
+            <Grid item md={10} container display="flex" justifyContent="space-evenly" spacing={2}>
+                <Grid item xs={6} md={4}>
+                    <FormControl sx={{ minWidth: 250 }}>
+                        <InputLabel>Applied or not</InputLabel>
+                        <Select value={jobState.applied} label="Applied or not" name="applied" onChange={handleSelectChange}>
+                            <MenuItem value={true}>Y</MenuItem>
+                            <MenuItem value={false}>N</MenuItem>
+                        </Select>
+                    </FormControl>
+                </Grid>
 
-        </div>
+                <Grid item xs={6} md={4}>
+                    {jobState.applied && (<FormControl sx={{ minWidth: 250 }}>
+                    <InputLabel>Status</InputLabel>
+                    <Select value={jobState.status} label="Status" name="status" onChange={handleSelectChange}>
+                        {statuss.map((s => <MenuItem key={s} value={s}>{s}</MenuItem>))}
+                    </Select>
+                    </FormControl>)}
+                </Grid>
+            </Grid>
+
+            {jobState.applied && (<Grid item xs={12} md={8}>
+                <TextField fullWidth label="CV Link" name='cvLink' value={jobState.cvLink} onChange={handleChange}/>
+            </Grid>)}
+
+            </Grid>
+            <Box display="flex" justifyContent="space-evenly" mt={2}>
+                <Button variant="outlined" onClick={() => navigate("/jobboard")}>Exit</Button>
+                <Button variant="outlined" onClick={handleSubmit}>Save</Button>
+            </Box>
+
+        </Box>
     )
 }
 

@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Grid, CircularProgress } from "@mui/material";
 
 
-const FacingPage = () => {
+const LoadingPage = () => {
     return (
         <Box sx={{ display: 'flex' }}>
             <Grid
@@ -19,4 +19,4 @@ const FacingPage = () => {
     )
 }
 
-export default FacingPage;
+export default LoadingPage;

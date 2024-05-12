@@ -45,10 +45,11 @@ export const addJobProgress = (id, update) => async (dispatch) => {
     dispatch(editJob({id, updates: selectedJob.data().updates.concat(update)}));
 }
 
-export const removeJobProgress = (id, update) => async (dispatch) => {
+export const removeJobProgress = (id, updateDate) => async (dispatch) => {
     const selectedJob = await getDoc(doc(db, 'jobs', id))
-    await updateDoc(doc(db, 'jobs', id), {updates: arrayRemove(update)})
-    dispatch(editJob({id, updates: selectedJob.data().updates.splice(selectedJob.data().updates.indexOf(update),1)}));
+    const seletedProgress = await selectedJob.data().updates.find((progress) => progress.date === updateDate)
+    await updateDoc(doc(db, 'jobs', id), {updates: arrayRemove(seletedProgress)})
+    dispatch(editJob({id, updates: selectedJob.data().updates.splice(selectedJob.data().updates.indexOf(seletedProgress),1)}));
 }
 
 export const removeJob = (id) => async (dispatch) => {
