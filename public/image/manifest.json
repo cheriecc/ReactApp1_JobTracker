@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Job Application Tracker",
+  "name": "A job tracker tool to track and manage all my job applications.",
   "icons": [
     {
       "src": "favicon.ico",
