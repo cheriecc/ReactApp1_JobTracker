@@ -3,7 +3,6 @@ import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 
 export const logIn = (email, password, callback) => {
-    console.log('try to log')
     signInWithEmailAndPassword(auth, email, password)
     .then((user) => callback())
     .catch(e => console(e))

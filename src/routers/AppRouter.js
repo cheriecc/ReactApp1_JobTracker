@@ -19,7 +19,6 @@ const AppRouter = () => (
             <Route exact path='/edit/:id' element= {<EditJobPage />} />
         </Route>
         <Route exact path='/login' element={<LoginPage />} />
-        {/* <Route exact path='/jobs/:id' element ={<JobDetailsPage />} /> */}
         <Route path="*" element={<NotFoundPage />}/>
     </Routes>
     <Footer />
