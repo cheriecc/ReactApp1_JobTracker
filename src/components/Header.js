@@ -18,7 +18,7 @@ const Header = () => {
                 {auth.currentUser && (<Grid item md={10} my={2} container display="flex" justifyContent="space-between">
                     <Button onClick={() => navigate('/create')} variant="contained">Add a New Job</Button>
                     <Button onClick={() => logOut(() => {
-                        navigate('/login')
+                        navigate('/')
                         navigate(0)
                     })} variant="contained">Log Out</Button>
                 </Grid>)}

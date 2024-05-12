@@ -12,7 +12,7 @@ const Copyright = styled('div')(({ theme }) => ({
 
 const Footer = () => {
     return (
-        <Box fullWidth bgcolor="info.main">
+        <Box bgcolor="info.main">
             <Grid container direction="column" mt={2}>
                 
                 <Grid item py={2}>
