@@ -46,7 +46,7 @@ const JobRow = (props) => {
         <TableCell>{props.jobDetails.title}</TableCell>
         <TableCell>{props.jobDetails.type}</TableCell>
         <TableCell>{moment(props.jobDetails.deadline).format('MMM Do, YYYY')}</TableCell>
-        <TableCell>{props.jobDetails.status}</TableCell>
+        <TableCell>{props.jobDetails.salary}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>

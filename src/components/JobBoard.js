@@ -36,7 +36,7 @@ const JobBoard = () => {
                     <StyledTableCell>Job Title</StyledTableCell>
                     <StyledTableCell>Type</StyledTableCell>
                     <StyledTableCell>Deadline</StyledTableCell>
-                    <StyledTableCell>Progress</StyledTableCell>
+                    <StyledTableCell>Salary</StyledTableCell>
                 </TableRow>
             </TableHead>
                 <TableBody>

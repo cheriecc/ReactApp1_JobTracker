@@ -48,7 +48,6 @@ const JobCard = (props) => {
                 <Grid item md={6}><Typography variant="body1">Type: {job.type}</Typography></Grid>
                 <Grid item md={6}><Typography variant="body1">Applied: {job.applied ? '√' : '×'}</Typography></Grid>
                 <Grid item md={6}><Typography variant="body1">Location: {job.location}</Typography></Grid>
-                {/* <Grid item md={6}><Typography variant="body1">Link: <a href={job.link}>{job.title}</a></Typography></Grid> */}
 
                 <Grid item md={6}>{job.applied && <Typography variant="body1">Submitted CV: <a href={job.cvLink}>CV</a></Typography>}</Grid>
             </Grid>

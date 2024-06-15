@@ -23,6 +23,7 @@ const JobForm = (props) => {
         skills: props.job ? props.job.skills : [],
         status: props.job ? props.job.status : 'In Progress',
         cvLink: props.job ? props.job.cvLink : '',
+        salary: props.job ? props.job.cvLink : '',
         error: ''
     }
 
@@ -66,7 +67,8 @@ const JobForm = (props) => {
                 description: jobState.description,
                 skills: jobState.skills,
                 status: jobState.status,
-                cvLink: jobState.cvLink
+                cvLink: jobState.cvLink,
+                salary: jobState.salary
             })
         }
     }
@@ -74,6 +76,7 @@ const JobForm = (props) => {
     const types = ['Full time', 'Part time', 'Contract']
     const statuss = ['Success', 'In Progress', 'Failed']
     const locations = ['Hybrid', 'On-site', 'Remote']
+    const salaries = ['not provided', '20k-38k', '38k-50k', '50k ~']
     const skills = ['C++', 'Java', 'C#', 'Python', 'JavaScript', 'PHP', 'React', 'Django', 'Vue', 'SQL', 'MongoDB', 'Firebase']
     
     return (
@@ -112,14 +115,18 @@ const JobForm = (props) => {
                         <FormControl sx={{ minWidth: 250 }}>
                             <InputLabel>Location</InputLabel>
                             <Select value={jobState.location} label="Location" name="location" onChange={handleSelectChange}>
-                                {/* {locations.map(area => <Box><ListSubheader key={area.key}>{area.key}</ListSubheader>{area.value.map(city => <MenuItem key={city}>{city}</MenuItem>)}</Box>)} */}
                                 {locations.map((l => <MenuItem key={l} value={l}>{l}</MenuItem>))}
                             </Select>
                         </FormControl>
                     </Grid>
 
                     <Grid item xs={6} md={4}>
-                        <TextField sx={{ minWidth: 250 }} label="Link" name='link' value={jobState.link} onChange={handleChange}/>
+                        <FormControl sx={{ minWidth: 250 }}>
+                            <InputLabel>Salary £</InputLabel>
+                            <Select value={jobState.salary} label="Salary" name="salary" onChange={handleSelectChange}>
+                                {salaries.map((s => <MenuItem key={s} value={s}>{s}</MenuItem>))}
+                            </Select>
+                        </FormControl>
                     </Grid>
 
                 </Grid>
@@ -136,6 +143,10 @@ const JobForm = (props) => {
                             >{skill}</Button>
                         ))}
                     </Box>
+                </Grid>
+
+                <Grid item xs={12} md={8}>
+                    <TextField fullWidth label="Link" name='link' value={jobState.link} onChange={handleChange}/>
                 </Grid>
 
                 <Grid item xs={12} md={8}>
