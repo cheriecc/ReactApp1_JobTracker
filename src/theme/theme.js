@@ -65,7 +65,7 @@ const theme = createTheme({
                         border: "1px solid",
                         borderColor: lightGray,
                         "&:hover": {
-                            color: darkBlue
+                            backgroundColor: lightBlue
                         }
                     }
                 },

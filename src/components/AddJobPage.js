@@ -20,7 +20,7 @@ const AddJobPage = () => {
                 </Grid>
                 <Grid item>
                     <JobForm onSubmit={(newJob) => {
-                        dispatch(addNewJob({...newJob, createAt: moment().valueOf()}))
+                        dispatch(addNewJob({...newJob, createAt: moment().valueOf(), updates: [], saved: false}))
                         navigate('/jobboard')
                     }}
                 />

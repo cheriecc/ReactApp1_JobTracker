@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { displayTrackOnly, displayAppliedOnly, setTextFilter, sortByInput } from "../slices/filterSlice";
+import { displaySavedOnly, displayAppliedOnly, setTextFilter, sortByInput } from "../slices/filterSlice";
 import { Box, Grid, TextField, FormControl, InputLabel, Select, MenuItem, FormControlLabel, Switch } from '@mui/material';
 
 
@@ -46,11 +46,11 @@ const JobFilter = () => {
 
                 <FormControlLabel 
                     control={<Switch 
-                        checked={filters.trackingOnly} 
-                        onChange={(e) => dispatch(displayTrackOnly(e.target.checked))} 
+                        checked={filters.savedOnly} 
+                        onChange={(e) => dispatch(displaySavedOnly(e.target.checked))} 
                         inputProps={{ 'aria-label': 'controlled' }}
                         />}
-                    label="Tracked Jobs Only"
+                    label="Saved Jobs Only"
                 />
 
             </Grid>

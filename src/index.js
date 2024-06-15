@@ -4,7 +4,7 @@ import './index.css';
 import { Provider } from 'react-redux';
 import store from './store/configurationStore';
 import AppRouter from './routers/AppRouter';
-import LoadingPage from './components/LoadingPage';
+import LoadingPage from './components/templates/LoadingPage';
 import { getAllJobs } from './slices/jobSlice';
 import theme from './theme/theme';
 import { ThemeProvider } from '@mui/material';

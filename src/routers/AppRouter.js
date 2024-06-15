@@ -3,10 +3,10 @@ import PrivateRoute from './PrivateRouters';
 import Header from '../components/Header';
 import LoginPage from '../components/LoginPage';
 import JobBoard from '../components/JobBoard';
-import NotFoundPage from '../components/NotFoundPage';
 import AddJobPage from '../components/AddJobPage';
 import EditJobPage from '../components/EditJobPage';
-import Footer from '../components/Footer';
+import NotFoundPage from '../components/templates/NotFoundPage';
+import Footer from '../components/templates/Footer';
 
 
 const AppRouter = () => (

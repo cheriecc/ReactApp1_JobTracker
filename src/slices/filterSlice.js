@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 const initialState = {
-    trackingOnly: false,  // init state: all jobs whether it's tracked or not
+    savedOnly: false,  // init state: all jobs whether it's savsed or not
     appliedOnly: false,
     text: '',
     sortBy: 'deadline',
@@ -12,14 +12,14 @@ const filterSlice = createSlice({
     name: 'filters',
     initialState,
     reducers: {
-        displayTrackOnly: (state, action) => { 
-            return { ...state, trackingOnly: action.payload }
+        displaySavedOnly: (state, action) => { 
+            return { ...state, savedOnly: action.payload }
         },
         displayAppliedOnly: (state, action) => {
             return { ...state, appliedOnly: action.payload }
         },
         sortByInput: (state, action) => {
-            return { ...state, sortBy: action.payload}
+            return { ...state, sortBy: action.payload }
         },
         setTextFilter: (state, action) => {
             return { ...state, text: action.payload }
@@ -27,6 +27,6 @@ const filterSlice = createSlice({
     }
 })
 
-export const { displayTrackOnly, displayAppliedOnly, sortByInput, setTextFilter} = filterSlice.actions
+export const { displaySavedOnly, displayAppliedOnly, sortByInput, setTextFilter} = filterSlice.actions
 
 export default filterSlice.reducer;

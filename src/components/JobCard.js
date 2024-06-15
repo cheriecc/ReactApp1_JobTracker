@@ -14,11 +14,11 @@ const JobCard = (props) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const [checked, setChecked] = useState(job.tracking)
+    const [checked, setChecked] = useState(job.saved)
 
-    const onTrackingChange = (e) => {
+    const onSavedChange = (e) => {
         setChecked(e.target.checked)
-        dispatch(updateJob(props.id, {...job, tracking: e.target.checked}))
+        dispatch(updateJob(props.id, {...job, saved: e.target.checked}))
     }
 
 
@@ -35,7 +35,7 @@ const JobCard = (props) => {
             </Box>
             <Grid container mt={2} px={5} direction="row-reverse" alignItems="center">
                 <Grid item md={4}>
-                    <Checkbox checked={checked} icon={<FavoriteBorder />} checkedIcon={<Favorite />} onChange={onTrackingChange} inputProps={{ 'aria-label': 'controlled' }} />
+                    <Checkbox checked={checked} icon={<FavoriteBorder />} checkedIcon={<Favorite />} onChange={onSavedChange} inputProps={{ 'aria-label': 'controlled' }} />
                 </Grid>
                 <Grid item xs={12} md={8}>
                     <Typography variant="body1">Status: {job.status}</Typography>

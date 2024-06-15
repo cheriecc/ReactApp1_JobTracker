@@ -5,8 +5,7 @@ import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 export const logIn = (email, password, callback) => {
     signInWithEmailAndPassword(auth, email, password)
     .then((user) => callback())
-    .catch(e => console(e))
-
+    .catch(e => console.log(e))
 }
 
 export const logOut = callback => {

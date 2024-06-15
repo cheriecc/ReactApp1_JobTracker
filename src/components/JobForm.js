@@ -22,6 +22,7 @@ const JobForm = (props) => {
         description: props.job ? props.job.description : '',
         skills: props.job ? props.job.skills : [],
         status: props.job ? props.job.status : 'In Progress',
+        cvLink: props.job ? props.job.cvLink : '',
         error: ''
     }
 
@@ -64,15 +65,17 @@ const JobForm = (props) => {
                 link: jobState.link,
                 description: jobState.description,
                 skills: jobState.skills,
-                status: jobState.status
+                status: jobState.status,
+                cvLink: jobState.cvLink
             })
         }
     }
 
     const types = ['Full time', 'Part time', 'Contract']
     const statuss = ['Success', 'In Progress', 'Failed']
+    const locations = ['Hybrid', 'On-site', 'Remote']
     const skills = ['C++', 'Java', 'C#', 'Python', 'JavaScript', 'PHP', 'React', 'Django', 'Vue', 'SQL', 'MongoDB', 'Firebase']
-
+    
     return (
         <Box component="form">
             {jobState.error !== '' && <Typography variant='caption'>{jobState.error}</Typography>}
@@ -81,10 +84,10 @@ const JobForm = (props) => {
 
                 <Grid item md={10} container display="flex" justifyContent="space-evenly" spacing={2}>
                     <Grid item xs={6} md={4}>
-                    <TextField required sx={{ minWidth: 250 }} label="Company name" name="companyName" value={jobState.companyName} onChange={handleChange}/>
+                        <TextField required sx={{ minWidth: 250 }} label="Job title" name="title" value={jobState.title} onChange={handleChange}/>
                     </Grid>
                     <Grid item xs={6} md={4}>
-                    <TextField required sx={{ minWidth: 250 }} label="Job title" name="title" value={jobState.title} onChange={handleChange}/>
+                    <TextField required sx={{ minWidth: 250 }} label="Company name" name="companyName" value={jobState.companyName} onChange={handleChange}/>
                     </Grid>
                 </Grid>
 
@@ -106,7 +109,13 @@ const JobForm = (props) => {
 
                 <Grid item md={10} container display="flex" justifyContent="space-evenly" spacing={2}>
                     <Grid item xs={6} md={4}>
-                        <TextField sx={{ minWidth: 250 }} label="Location" name='location' value={jobState.location} onChange={handleChange}/>
+                        <FormControl sx={{ minWidth: 250 }}>
+                            <InputLabel>Location</InputLabel>
+                            <Select value={jobState.location} label="Location" name="location" onChange={handleSelectChange}>
+                                {/* {locations.map(area => <Box><ListSubheader key={area.key}>{area.key}</ListSubheader>{area.value.map(city => <MenuItem key={city}>{city}</MenuItem>)}</Box>)} */}
+                                {locations.map((l => <MenuItem key={l} value={l}>{l}</MenuItem>))}
+                            </Select>
+                        </FormControl>
                     </Grid>
 
                     <Grid item xs={6} md={4}>

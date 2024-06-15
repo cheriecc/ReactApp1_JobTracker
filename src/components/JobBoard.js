@@ -3,7 +3,7 @@ import JobFilter from "./JobFilter";
 import getDisplayJobs from "../selectors/jobs";
 import { useSelector } from "react-redux";
 import { styled } from '@mui/material/styles';
-import { Table, Container, TableBody, TableCell, tableCellClasses, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import { Table, Container, TableBody, TableCell, tableCellClasses, TableContainer, TableHead, TableRow, Paper, Typography } from '@mui/material';
 import JobRow from "./JobRow";
 
 
@@ -25,9 +25,9 @@ const JobBoard = () => {
     return (
       <Container maxWidth="lg">
             <JobFilter />
-            {jobs.length === 0 && (<p>No job added</p>)}
+            {jobs.length === 0 && (<Typography variant="h5" align="center">No job added</Typography>)}
 
-            <TableContainer component={Paper}>
+            {jobs.length !== 0 && (<TableContainer component={Paper}>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead>
                 <TableRow>
@@ -45,7 +45,7 @@ const JobBoard = () => {
                 ))}
                 </TableBody>
             </Table>
-            </TableContainer>
+            </TableContainer>)}
         </Container>
     )
 }

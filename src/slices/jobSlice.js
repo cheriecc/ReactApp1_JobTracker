@@ -42,6 +42,7 @@ export const updateJob = (id, jobUpdate) => async (dispatch) => {
 export const addJobProgress = (id, update) => async (dispatch) => {
     const selectedJob = await getDoc(doc(db, 'jobs', id))
     await updateDoc(doc(db, 'jobs', id), {updates: arrayUnion(update)})
+    console.log(`empty update: ${selectedJob.data().updates}`)
     dispatch(editJob({id, updates: selectedJob.data().updates.concat(update)}));
 }
 
