@@ -31,7 +31,7 @@ const JobFilter = () => {
                         onChange={(e) => dispatch(sortByInput(e.target.value))}
                     >
                         <MenuItem value="deadline">Deadline</MenuItem>
-                        <MenuItem value='create At'>Create At</MenuItem>
+                        <MenuItem value='salary'>Salary</MenuItem>
                     </Select>            
                 </FormControl>
                 

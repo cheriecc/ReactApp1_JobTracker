@@ -23,7 +23,7 @@ const JobForm = (props) => {
         skills: props.job ? props.job.skills : [],
         status: props.job ? props.job.status : 'In Progress',
         cvLink: props.job ? props.job.cvLink : '',
-        salary: props.job ? props.job.cvLink : '',
+        salary: props.job ? props.job.salary : '',
         error: ''
     }
 
@@ -81,7 +81,7 @@ const JobForm = (props) => {
     
     return (
         <Box component="form">
-            {jobState.error !== '' && <Typography variant='caption'>{jobState.error}</Typography>}
+            {jobState.error !== '' && <Typography variant='warning'>{jobState.error}</Typography>}
 
             <Grid container display="flex" justifyContent="center" spacing={2} columnSpacing={2}>
 

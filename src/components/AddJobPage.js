@@ -16,7 +16,7 @@ const AddJobPage = () => {
         <Container maxWidth="lg">
             <Grid container direction="column" alignItems="center" rowSpacing={2}>
                 <Grid item mt={3}>
-                    <Typography variant="h4">Track a New Job</Typography>
+                    <Typography variant="h4">Add a New Job</Typography>
                 </Grid>
                 <Grid item>
                     <JobForm onSubmit={(newJob) => {

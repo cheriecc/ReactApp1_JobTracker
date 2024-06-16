@@ -59,15 +59,17 @@ const JobCard = (props) => {
                 </Box>
             </Box>
             <Grid container mt={2} px={5} alignItems="center">
-                <Typography>Description: {job.description}</Typography>
+                <Typography>Description:</Typography>
+                <Typography>{job.description}</Typography>
+                
             </Grid>
 
             <Grid container justifyContent="space-between" px={5} my={3}>
-                <Button variant='outlined' onClick={() => navigate(`/edit/${props.id}`)}>Edit</Button>
                 <Button variant='outlined' onClick={() => {
                     dispatch(removeJob(props.id))
                     navigate('/jobboard')
                     }}>Delete</Button>
+                <Button variant='outlined' onClick={() => navigate(`/edit/${props.id}`)}>Track application</Button>
             </Grid>   
         </Dialog>
     )

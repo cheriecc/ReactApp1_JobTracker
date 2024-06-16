@@ -5,7 +5,7 @@ const getDisplayJobs = (jobs, { savedOnly, appliedOnly, text, sortBy }) => {
         const textMatch = (job.title.concat(job.companyName)).toLowerCase().includes(text.toLowerCase())
         
         return savedMatch && appliedMatch && textMatch
-    }).sort((a, b) => sortBy === 'deadline' ? a.deadline - b.deadline : a.createAt - b.createAt)
+    }).sort((a, b) => sortBy === 'deadline' ? a.deadline - b.deadline : a.salary - b.salary)
 }
 
 export default getDisplayJobs

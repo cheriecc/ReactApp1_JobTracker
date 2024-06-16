@@ -20,6 +20,7 @@ const EditJobPage = () => {
             <JobForm 
                 key={id} job={job}
                 onSubmit={(jobUpdate) => {
+                    console.log(jobUpdate)
                     dispatch(updateJob(id, jobUpdate))
                     navigate('/jobboard')
                 }}

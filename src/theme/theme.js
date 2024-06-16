@@ -6,12 +6,18 @@ const lightGray = "#F1F1F1";
 const darkBlue = "#153448";
 const lightBlue = "#9AC8CD";
 const lightBlueGreen = "#b2dfdb";
+const red = "#C80036";
 
 const theme = createTheme({
     typography: {
         fontFamily: "Poppins, sans-serif",
         caption: {
             fontSize: 15,
+            fontStyle: 'italic'
+        },
+        warning: {
+            fontSize: 18,
+            color: red,
             fontStyle: 'italic'
         }
     },
